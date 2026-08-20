@@ -42,51 +42,22 @@ class _TelaSomaState extends State<TelaSoma>{
   final TextEditingController numero3Controller = TextEditingController();
 
   //Variável que armazena o resultado da soma e que será exibida na tela
-  double resultadoTotal = 0;
-  double resultadoPontos = 0;
-  double resultadoPercentual = 0;
+  double seguidores = 0;
+  double ganho = 0;
 
-  //Função chamada ao pressionar o botão "somar"
-  void total(){
+  void simulado(){
 
-    //Tenta converter o texto para double; se falhar , usa o 0 como padrão
     double n1=double.tryParse(numero1Controller.text) ?? 0;
     double n2=double.tryParse(numero2Controller.text) ?? 0;
-
-    setState((){
-      resultadoTotal = n1 + n2;
-    });
-  }
-
-  void pontos(){
-
-    double n1=double.tryParse(numero1Controller.text) ?? 0;
     double n3=double.tryParse(numero3Controller.text) ?? 0;
 
     setState((){
-      resultadoPontos = n1 * n3;
+      seguidores = n1 + (n3 * n2);
+      ganho = n3 * n2;
     });
   }
 
-  void porcentagem(){
 
-    double n1=double.tryParse(numero1Controller.text) ?? 0;
-    double n2=double.tryParse(numero2Controller.text) ?? 0;
-
-    setState((){
-      resultadoPercentual = ((n1 / (n1 + n2)) * 100);
-    });
-  }
-
-  void resultados(){
-    setState(() {
-      total();
-      pontos();
-      porcentagem();
-    });
-  }
-
-  
 
   @override
   Widget build(BuildContext context){
@@ -94,7 +65,7 @@ class _TelaSomaState extends State<TelaSoma>{
     //Scaffold fornece estrutura visual básica (AppBar, body, etc.)
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Campeonanto"),
+        title: const Text("Seguidores"),
         backgroundColor: Colors.deepPurple,
       ),
 
@@ -110,7 +81,7 @@ class _TelaSomaState extends State<TelaSoma>{
             TextField(
               controller: numero1Controller,
               decoration: const InputDecoration(
-                labelText: "Digite o número de vitorias",
+                labelText: "Seguidores Atuais",
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number, //Abre teclado numérico
@@ -121,7 +92,7 @@ class _TelaSomaState extends State<TelaSoma>{
             TextField(
               controller: numero2Controller,
               decoration: const InputDecoration(
-                labelText: "Digite o número de derrotas",
+                labelText: "Ganho por dia",
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
@@ -131,7 +102,7 @@ class _TelaSomaState extends State<TelaSoma>{
             TextField(
               controller: numero3Controller,
               decoration: const InputDecoration(
-                labelText: "Digite o valor dos pontos",
+                labelText: "Simular x dias",
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
@@ -140,43 +111,28 @@ class _TelaSomaState extends State<TelaSoma>{
 
             // Botão que dispara a função somar
             ElevatedButton(
-              onPressed:  resultados,
+              onPressed:  simulado,
               child: const Text("Resultados"),
             ),
             const SizedBox(height: 20),
 
             // Exibe o resultado atual
             Text(
-              "Total de Partidas: $resultadoTotal",
+              "Total: $seguidores",
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
 
-
-            const SizedBox(height: 20),
-
-            // Exibe o resultado atual
-            Text(
-              "Total de Pontos: $resultadoPontos",
+                       Text(
+              "Ganho: $ganho",
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
 
-
-            const SizedBox(height: 20),
-
-            // Exibe o resultado atual
-            Text(
-              "Porcentagem de Vitorias: $resultadoPercentual%",
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ],
         ),
       ),
